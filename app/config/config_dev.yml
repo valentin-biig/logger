@@ -12,13 +12,36 @@ web_profiler:
     intercept_redirects: false
 
 monolog:
+    channels:
+        - my_channel
     handlers:
         main:
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.log'
-            level: debug
+            level: notice
             channels: ['!event']
-        console:
-            type: console
-            process_psr_3_messages: false
-            channels: ['!event', '!doctrine', '!console']
+        gelf:
+            type: gelf
+            publisher:
+                hostname: '%gelf_host%'
+                port: '%gelf_port%'
+            level: info
+        sentry:
+            type: raven
+            dsn: '%sentry_dsn%'
+            level: warning
+        finger:
+            type: fingers_crossed
+            action_level: error
+            handler: sentry_error
+        sentry_error:
+            type: raven
+            dsn: '%sentry_dsn%'
+            level: info
+        gelf_channel_specific:
+            type: gelf
+            publisher:
+                hostname: '%gelf_host%'
+                port: '%gelf_port%'
+            level: info
+            channels: ['my_channel']

@@ -17,3 +17,8 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    gelf_host: elk
+    gelf_port: 12201
+
+    sentry_dsn: https://dsn@sentry.io/id
