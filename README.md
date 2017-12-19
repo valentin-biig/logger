@@ -3,7 +3,7 @@ Logger test library (WIP)
 
 ## Overview
  
- * Docker (nginx, php-fpm, mysql, phpmyadmin)
+ * Docker (nginx, php-fpm, mysql, phpmyadmin, elk)
  * Symfony 3.4
  * Monolog configuration
  * Controller (to test logs)
@@ -72,3 +72,14 @@ Logger test library (WIP)
              level: info
              channels: ['my_channel']
  ``` 
+ 
+ ```php
+ // Triggers logs on main channel
+ $this->get('logger')->notice('Just a notice');
+  
+ // Triggers logs on main channel
+ $this->get('logger')->alert('Big error');
+  
+ // Triggers logs on my_channel
+ $this->get('monolog.logger.my_channel')->warning('Warning');
+ ```

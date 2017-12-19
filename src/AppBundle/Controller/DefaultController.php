@@ -20,11 +20,18 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/yolo", name="vvv")
+     * @Route("/logs", name="vvv")
      */
     public function testAction(Request $request)
     {
-        $this->get('monolog.logger.my_channel')->alert('coucou');
+        // Triggers logs on main channel
+        $this->get('logger')->notice('Just a notice');
+
+        // Triggers logs on main channel
+        $this->get('logger')->alert('Big error');
+
+        // Triggers logs on my_channel
+        $this->get('monolog.logger.my_channel')->warning('Warning');
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
